@@ -80,6 +80,11 @@ namespace WebApplication1
 
             var app = builder.Build();
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             Console.WriteLine("Google ClientId loaded: " + !string.IsNullOrEmpty(builder.Configuration["Authentication:Google:ClientId"]));
             Console.WriteLine("Google ClientSecret loaded: " + !string.IsNullOrEmpty(builder.Configuration["Authentication:Google:ClientSecret"]));
             Console.WriteLine("JWT Key loaded: " + !string.IsNullOrEmpty(builder.Configuration["Jwt:Key"]));
