@@ -20,7 +20,7 @@ namespace WebApplication1
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:3000")
+                                      builder.WithOrigins("http://localhost:3000", "https://pet-app-frontend-eta.vercel.app", "https://pet-app-frontend-709ahqrh2-amels-projects-f7598538.vercel.app")
                                       .AllowAnyHeader()
                                       .AllowAnyMethod()
                                       .AllowCredentials();

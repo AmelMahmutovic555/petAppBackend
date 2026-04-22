@@ -94,8 +94,8 @@ namespace WebApplication1.Controllers
             Response.Cookies.Append("authToken", jwt, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Lax,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Expires = DateTimeOffset.UtcNow.AddDays(1)
             });
 
@@ -188,8 +188,8 @@ namespace WebApplication1.Controllers
             Response.Cookies.Append("authToken", jwt, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Lax,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Expires = DateTimeOffset.UtcNow.AddDays(1)
             });
 
