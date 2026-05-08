@@ -199,7 +199,7 @@ namespace WebApplication1.Controllers
             //return Ok(new { token = jwt, email = user.email });
             }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("me")]
         public ActionResult GetMe()
         {
