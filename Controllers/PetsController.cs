@@ -67,6 +67,11 @@ namespace WebApplication1.Controllers
 
             var castUserId = int.Parse(userId);
 
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User doesn't exist.");
+            }
+
             var pets = context.pets.Where(p => p.toBabysit == castUserId).Select(p => new PetsDto
             {
                 name = p.name,
@@ -75,12 +80,6 @@ namespace WebApplication1.Controllers
                 type = p.type,
                 image = p.image,
             }).ToList();
-
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized("User doesn't exist.");
-            }
 
             if (pets.Count == 0)
             {
@@ -98,6 +97,12 @@ namespace WebApplication1.Controllers
 
             var castUserId = int.Parse(userId);
 
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User doesn't exist.");
+            }
+
             var pets = context.pets.Where(p => p.userId == castUserId && p.toBabysit == null).Select(p => new PetsDto
             {
                 name = p.name,
@@ -106,12 +111,6 @@ namespace WebApplication1.Controllers
                 type = p.type,
                 image = p.image,
             }).ToList();
-
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized("User doesn't exist.");
-            }
 
             if (pets.Count == 0)
             {
