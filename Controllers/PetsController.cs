@@ -60,13 +60,71 @@ namespace WebApplication1.Controllers
         }
 
         [Authorize]
+        [HttpGet("findByUser/{toBabysit}")]
+        public ActionResult<PetsDto> FindByUser(int id)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var castUserId = int.Parse(userId);
+
+            var pets = context.pets.Where(p => p.toBabysit == castUserId).Select(p => new PetsDto
+            {
+                name = p.name,
+                age = p.age,
+                phone = p.phone,
+                type = p.type,
+                image = p.image,
+            }).ToList();
+
+            if(pets.Count == 0)
+            {
+                return NotFound("You did not add any pets.");
+            }
+
+            return Ok(pets);
+        }
+
+        [Authorize]
+        [HttpGet("findByToBabysitUser/{toBabysit}")]
+        public ActionResult<PetsDto> FindByToBabysitUser(int id)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var castUserId = int.Parse(userId);
+
+            var pets = context.pets.Where(p => p.userId == castUserId && p.toBabysit == null).Select(p => new PetsDto
+            {
+                name = p.name,
+                age = p.age,
+                phone = p.phone,
+                type = p.type,
+                image = p.image,
+            }).ToList();
+
+            if (pets.Count == 0)
+            {
+                return NotFound("You do not have any pets to babysit.");
+            }
+
+            return Ok(pets);
+        }
+
+        [Authorize]
         [HttpPost("add")]
         public ActionResult<PetsDto> AddPets([FromBody] PetsDto pets)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var castUserId = int.Parse(userId);
             //var existingPet = context.pets.FirstOrDefault(ep => ep.name == pets.name);
             var existingPet = context.pets.Where(ep => ep.name == pets.name).ToList();
 
-            foreach(var pet in existingPet)
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User doesn't exist.");
+            }
+
+            foreach (var pet in existingPet)
             {
                 if (pet != null &&
                     pet.type == pets.type &&
@@ -83,7 +141,8 @@ namespace WebApplication1.Controllers
                 age = pets.age,
                 phone = pets.phone,
                 type = pets.type,
-                image = pets.image
+                image = pets.image,
+                toBabysit = castUserId
             };
 
             context.pets.Add(pets1);

@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebApplication1.Models
 {
     public class User
     {
@@ -17,6 +19,11 @@
         public string? GoogleId { get; set; }
         public string? AuthProvider { get; set; }
 
+        [InverseProperty(nameof(Pets.User))]
         public ICollection<Pets> pets { get; set; } = new List<Pets>();
+
+        [InverseProperty(nameof(Pets.ToBabysitUser))]
+        public ICollection<Pets> petsToBabysit { get; set; } = new List<Pets>();
+
     }
 }

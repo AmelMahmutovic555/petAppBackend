@@ -18,7 +18,13 @@ namespace WebApplication1.Models
         public int? userId { get; set; }
 
         [ForeignKey(nameof(userId))]
+        [InverseProperty(nameof(Models.User.pets))]
         public User? User { get; set; }
 
+        public int? toBabysit { get; set; }
+
+        [ForeignKey(nameof(toBabysit))]
+        [InverseProperty(nameof(Models.User.petsToBabysit))]
+        public User? ToBabysitUser { get; set; }
     }
 }

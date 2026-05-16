@@ -63,14 +63,19 @@ Accept: application/json
 
 ###
 
+GET {{WebApplication1_HostAddress}}/pets/findByUser/1
+Accept: application/json
+
+###
+
 POST {{WebApplication1_HostAddress}}/pets/add
 Content-Type: application/json
 Accept: application/json
 {
-  "name": "Peter",
-  "age": "10",
+  "name": "Sara",
+  "age": "3",
   "phone": "071271222",
-  "type": "dog"
+  "type": "cat"
 }
 
 ###
