@@ -60,8 +60,41 @@ namespace WebApplication1.Controllers
         }
 
         [Authorize]
-        [HttpPut("add/{name}")]
-        public ActionResult<PetsDto> AddPets(string name, [FromBody] PetsDto pets)
+        [HttpPost("add")]
+        public ActionResult<PetsDto> AddPets([FromBody] PetsDto pets)
+        {
+            //var existingPet = context.pets.FirstOrDefault(ep => ep.name == pets.name);
+            var existingPet = context.pets.Where(ep => ep.name == pets.name).ToList();
+
+            foreach(var pet in existingPet)
+            {
+                if (pet != null &&
+                    pet.type == pets.type &&
+                    pet.age == pets.age &&
+                    pet.phone == pets.phone)
+                {
+                    return BadRequest("Pet with that information already exists.");
+                }
+            }
+
+            var pets1 = new Pets()
+            {
+                name = pets.name,
+                age = pets.age,
+                phone = pets.phone,
+                type = pets.type,
+                image = pets.image
+            };
+
+            context.pets.Add(pets1);
+            context.SaveChanges();
+
+            return Ok(pets);
+        }
+
+        [Authorize]
+        [HttpPut("edit/{name}")]
+        public ActionResult<PetsDto> EditPets(string name, [FromBody] PetsDto pets)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

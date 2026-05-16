@@ -196,8 +196,8 @@ namespace WebApplication1.Controllers
             await HttpContext.SignOutAsync("External");
 
             return Redirect("https://pet-app-frontend-eta.vercel.app/");
-            //return Ok(new { token = jwt, email = user.email });
-            }
+            //return Ok(new { email = user.email });
+        }
 
         [Authorize]
         [HttpGet("me")]
