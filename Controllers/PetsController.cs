@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
 
             var castUserId = int.Parse(userId);
 
-            var pets = context.pets.Where(p => p.toBabysit == id).Select(p => new PetsDto
+            var pets = context.pets.Where(p => p.toBabysit == castUserId).Select(p => new PetsDto
             {
                 name = p.name,
                 age = p.age,
@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
 
             var castUserId = int.Parse(userId);
 
-            var pets = context.pets.Where(p => p.userId == id && p.toBabysit == null).Select(p => new PetsDto
+            var pets = context.pets.Where(p => p.userId == castUserId && p.toBabysit == null).Select(p => new PetsDto
             {
                 name = p.name,
                 age = p.age,
