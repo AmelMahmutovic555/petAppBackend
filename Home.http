@@ -68,6 +68,11 @@ Accept: application/json
 
 ###
 
+GET {{WebApplication1_HostAddress}}/pets/findByToBabysitUser/1
+Accept: application/json
+
+###
+
 POST {{WebApplication1_HostAddress}}/pets/add
 Content-Type: application/json
 Accept: application/json

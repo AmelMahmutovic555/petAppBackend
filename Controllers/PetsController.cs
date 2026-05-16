@@ -59,7 +59,7 @@ namespace WebApplication1.Controllers
             return Ok(pet1);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("findByUser/{toBabysit}")]
         public ActionResult<PetsDto> FindByUser(int id)
         {
@@ -84,7 +84,7 @@ namespace WebApplication1.Controllers
             return Ok(pets);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("findByToBabysitUser/{toBabysit}")]
         public ActionResult<PetsDto> FindByToBabysitUser(int id)
         {
