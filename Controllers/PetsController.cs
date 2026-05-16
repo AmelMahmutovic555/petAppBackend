@@ -63,9 +63,9 @@ namespace WebApplication1.Controllers
         [HttpGet("findByUser/{id}")]
         public ActionResult<PetsDto> FindByUser(int id)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var castUserId = int.Parse(userId);
+            //var castUserId = int.Parse(userId);
 
             var pets = context.pets.Where(p => p.toBabysit == id).Select(p => new PetsDto
             {
@@ -88,9 +88,9 @@ namespace WebApplication1.Controllers
         [HttpGet("findByToBabysitUser/{id}")]
         public ActionResult<PetsDto> FindByToBabysitUser(int id)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var castUserId = int.Parse(userId);
+            //var castUserId = int.Parse(userId);
 
             var pets = context.pets.Where(p => p.userId == id && p.toBabysit == null).Select(p => new PetsDto
             {
