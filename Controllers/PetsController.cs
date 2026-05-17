@@ -103,7 +103,7 @@ namespace WebApplication1.Controllers
             //    return Unauthorized("User doesn't exist.");
             //}
 
-            var pets = context.pets.Where(p => p.userId == id && p.toBabysit == null).Select(p => new PetsDto
+            var pets = context.pets.Where(p => p.userId == id && p.toBabysit != id).Select(p => new PetsDto
             {
                 name = p.name,
                 age = p.age,
