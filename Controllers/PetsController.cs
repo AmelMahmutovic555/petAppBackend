@@ -90,6 +90,35 @@ namespace WebApplication1.Controllers
             return Ok(pets);
         }
 
+        [HttpGet("findByUserAndType/{id}/{type}")]
+        public ActionResult<PetsDto> FindByUserAndType(int id, string type)
+        {
+            //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //var castUserId = int.Parse(userId);
+
+            //if (string.IsNullOrEmpty(userId))
+            //{
+            //    return Unauthorized("User doesn't exist.");
+            //}
+
+            var pets = context.pets.Where(p => p.toBabysit == id && p.type == type).Select(p => new PetsDto
+            {
+                name = p.name,
+                age = p.age,
+                phone = p.phone,
+                type = p.type,
+                image = p.image,
+            }).ToList();
+
+            if (pets.Count == 0)
+            {
+                return NotFound("You did not add any pets.");
+            }
+
+            return Ok(pets);
+        }
+
         //[Authorize]
         [HttpGet("findByToBabysitUser/{id}")]
         public ActionResult<PetsDto> FindByToBabysitUser(int id)
