@@ -85,6 +85,12 @@ Accept: application/json
 
 ###
 
+DELETE {{WebApplication1_HostAddress}}/pets/delete/Lana/8/071-236-872/cat
+Accept: application/json
+
+
+###
+
 POST {{WebApplication1_HostAddress}}/home/add
 Content-Type: application/json
 Accept: application/json

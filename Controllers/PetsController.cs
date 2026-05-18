@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WebApplication1.Data;
 using WebApplication1.Dto;
@@ -163,14 +164,14 @@ namespace WebApplication1.Controllers
         }
 
         [Authorize]
-        [HttpPut("edit/{name}")]
-        public ActionResult<PetsDto> EditPets(string name, [FromBody] PetsDto pets)
+        [HttpPut("edit/{name}/{age}/{phone}/{type}")]
+        public ActionResult<PetsDto> EditPets(string name, int age, string phone, string type, [FromBody] PetsDto pets)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             var castUserId = int.Parse(userId);
 
-            var existingPets = context.pets.FirstOrDefault(p => p.name == name);
+            var existingPets = context.pets.FirstOrDefault(p => p.name == name && p.age == age && p.phone == phone && p.type == type);
 
             if (string.IsNullOrEmpty(userId))
             {
@@ -179,7 +180,7 @@ namespace WebApplication1.Controllers
 
             if(existingPets == null)
             {
-                return BadRequest("Pet doesn't exists.");
+                return BadRequest("Pet doesn't exist.");
             }
 
             existingPets.name = pets.name;
@@ -212,6 +213,33 @@ namespace WebApplication1.Controllers
             };
 
             return Ok(existingPets);
+        }
+
+        [Authorize]
+        [HttpDelete("delete/{name}/{age}/{phone}/{type}")]
+        public ActionResult<PetsDto> DeletePets(string name, int age, string phone, string type)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var castUserId = int.Parse(userId);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User doesn't exist.");
+            }
+
+            var existingPets = context.pets.FirstOrDefault(p => p.name == name && p.age == age && p.phone == phone && p.type == type);
+
+            if (existingPets == null)
+            {
+                return BadRequest("Pet doesn't exist.");
+            }
+
+            context.pets.Remove(existingPets);
+
+            context.SaveChanges();
+
+            return Ok("Pet with name " + existingPets.name + " deleted successfully.");
         }
     }
 }
