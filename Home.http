@@ -63,7 +63,7 @@ Accept: application/json
 
 ###
 
-GET {{WebApplication1_HostAddress}}/pets/findByUser/3
+GET {{WebApplication1_HostAddress}}/pets/findByUser/1
 Accept: application/json
 
 ###
@@ -88,6 +88,11 @@ Accept: application/json
 DELETE {{WebApplication1_HostAddress}}/pets/delete/Lana/8/071-236-872/cat
 Accept: application/json
 
+
+###
+
+GET {{WebApplication1_HostAddress}}/pets/findByUserAndType/1/dog
+Accept: application/json
 
 ###
 

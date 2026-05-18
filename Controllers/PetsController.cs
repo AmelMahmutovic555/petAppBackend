@@ -150,6 +150,37 @@ namespace WebApplication1.Controllers
             return Ok(pets);
         }
 
+        //[Authorize]
+        [HttpGet("findByToBabysitUserAndType/{id}")]
+        public ActionResult<PetsDto> FindByToBabysitUserAndType(int id, string type)
+        {
+            //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //var castUserId = int.Parse(userId);
+
+
+            //if (string.IsNullOrEmpty(userId))
+            //{
+            //    return Unauthorized("User doesn't exist.");
+            //}
+
+            var pets = context.pets.Where(p => p.userId == id && p.toBabysit != id && p.type == type).Select(p => new PetsDto
+            {
+                name = p.name,
+                age = p.age,
+                phone = p.phone,
+                type = p.type,
+                image = p.image,
+            }).ToList();
+
+            if (pets.Count == 0)
+            {
+                return NotFound("You do not have any pets to babysit.");
+            }
+
+            return Ok(pets);
+        }
+
         [Authorize]
         [HttpPost("add")]
         public ActionResult<PetsDto> AddPets([FromBody] PetsDto pets)
