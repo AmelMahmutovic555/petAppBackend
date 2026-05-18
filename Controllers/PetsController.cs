@@ -151,7 +151,7 @@ namespace WebApplication1.Controllers
         }
 
         //[Authorize]
-        [HttpGet("findByToBabysitUserAndType/{id}")]
+        [HttpGet("findByToBabysitUserAndType/{id}/{type}")]
         public ActionResult<PetsDto> FindByToBabysitUserAndType(int id, string type)
         {
             //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
