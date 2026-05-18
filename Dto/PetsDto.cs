@@ -16,9 +16,9 @@ namespace WebApplication1.Dto
         public string? image { get; set; }
 
 
-        //public int? userId { get; set; }
+        public int? userId { get; set; }
 
-        //[ForeignKey(nameof(userId))]
-        //public User? User { get; set; }
+        [ForeignKey(nameof(userId))]
+        public User? User { get; set; }
     }
 }

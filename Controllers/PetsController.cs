@@ -187,7 +187,7 @@ namespace WebApplication1.Controllers
             existingPets.age = pets.age;
             existingPets.phone = pets.phone;
             existingPets.type = pets.type;
-            existingPets.userId = castUserId;
+            existingPets.userId = pets.userId;
                 
             //var pets1 = new Pets()
             //{
