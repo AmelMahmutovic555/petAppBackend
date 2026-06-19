@@ -23,8 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot1\" />
-    <Folder Include="wwwroot1\uploads\pets\" />
+    <Folder Include="wwwroot\uploads\pets\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

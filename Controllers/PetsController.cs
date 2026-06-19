@@ -222,7 +222,7 @@ namespace WebApplication1.Controllers
 
                 var uploadsFolder = Path.Combine(
                     Directory.GetCurrentDirectory(),
-                    "wwwroot1",
+                    "wwwroot",
                     "uploads",
                     "pets"
                  );
