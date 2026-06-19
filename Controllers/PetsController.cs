@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
                 age = pet.age,
                 phone = pet.phone,
                 type = pet.type,
-                imageUrl = p.image,
+                imageUrl = pet.image,
             };
 
             return Ok(pet1);
