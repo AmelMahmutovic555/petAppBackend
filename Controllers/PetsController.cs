@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
                 age = pet.age,
                 phone = pet.phone,
                 type = pet.type,
-                image = pet.image
+                //image = pet.image
             };
 
             return Ok(pet1);
@@ -79,7 +79,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                image = p.image,
+                //image = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -108,7 +108,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                image = p.image,
+                //image = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -139,7 +139,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                image = p.image,
+                //image = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -170,7 +170,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                image = p.image,
+                //image = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -183,7 +183,7 @@ namespace WebApplication1.Controllers
 
         [Authorize]
         [HttpPost("add")]
-        public ActionResult<PetsDto> AddPets([FromBody] PetsDto pets)
+        public ActionResult<PetsDto> AddPets([FromForm] PetsDto pets)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -207,13 +207,49 @@ namespace WebApplication1.Controllers
                 }
             }
 
+            string? imageUrl = null;
+
+            if (pets.image != null && pets.image.Length > 0)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+
+                var extension = Path.GetExtension(pets.image.FileName).ToLower();
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest("Invalid image type.");
+                }
+
+                var uploadsFolder = Path.Combine(
+                    "uploads",
+                    "pets"
+                 );
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var fileName = $"{Guid.NewGuid()}{extension}";
+
+                var filePath = Path.Combine (uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    pets.image.CopyTo(stream);
+                }
+
+                imageUrl = $"/uploads/pets/{fileName}";
+            }
+
+
             var pets1 = new Pets()
             {
                 name = pets.name,
                 age = pets.age,
                 phone = pets.phone,
                 type = pets.type,
-                image = pets.image,
+                image = imageUrl,
                 toBabysit = castUserId
             };
 

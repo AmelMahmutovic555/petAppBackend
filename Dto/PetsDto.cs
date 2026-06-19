@@ -13,7 +13,7 @@ namespace WebApplication1.Dto
 
         public string type { get; set; } = string.Empty;
 
-        public string? image { get; set; }
+        public IFormFile? image { get; set; }
 
 
         public int? userId { get; set; }

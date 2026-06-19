@@ -99,6 +99,8 @@ namespace WebApplication1
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
 
