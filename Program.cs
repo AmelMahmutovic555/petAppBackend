@@ -99,6 +99,15 @@ namespace WebApplication1
 
             app.UseHttpsRedirection();
 
+            var uploadsPath = Path.Combine(
+    Directory.GetCurrentDirectory(),
+    "wwwroot",
+    "uploads",
+    "pets"
+);
+
+            Directory.CreateDirectory(uploadsPath);
+
             app.UseStaticFiles();
 
             app.UseRouting();
