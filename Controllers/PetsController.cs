@@ -5,13 +5,24 @@ using System.Security.Claims;
 using WebApplication1.Data;
 using WebApplication1.Dto;
 using WebApplication1.Models;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace WebApplication1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PetsController(HomeDbContext context) : ControllerBase
+    public class PetsController : ControllerBase
     {
+        private readonly HomeDbContext context;
+        private readonly Cloudinary cloudinary;
+
+        public PetsController(HomeDbContext context, Cloudinary cloudinary)
+        {
+            this.context = context;
+            this.cloudinary = cloudinary;
+        }
+
         [HttpGet]
         public ActionResult<List<PetsDto>> GetPets()
         {
