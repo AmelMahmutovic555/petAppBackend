@@ -239,7 +239,7 @@ namespace WebApplication1.Controllers
                     Folder = "petcare-match/pets"
                 };
 
-                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                var uploadResult = cloudinary.Upload(uploadParams);
 
                 if (uploadResult.Error != null)
                 {
