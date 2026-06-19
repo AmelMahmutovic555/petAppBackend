@@ -231,28 +231,22 @@ namespace WebApplication1.Controllers
                     return BadRequest("Invalid image type.");
                 }
 
-                var uploadsFolder = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot",
-                    "uploads",
-                    "pets"
-                 );
+                using var stream = pets.image.OpenReadStream();
 
-                if (!Directory.Exists(uploadsFolder))
+                var uploadParams = new ImageUploadParams
                 {
-                    Directory.CreateDirectory(uploadsFolder);
+                    File = new FileDescription(pets.image.FileName, stream),
+                    Folder = "petcare-match/pets"
+                };
+
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.Error != null)
+                {
+                    return BadRequest(uploadResult.Error.Message);
                 }
 
-                var fileName = $"{Guid.NewGuid()}{extension}";
-
-                var filePath = Path.Combine (uploadsFolder, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    pets.image.CopyTo(stream);
-                }
-
-                imageUrl = $"/uploads/pets/{fileName}";
+                imageUrl = uploadResult.SecureUrl.ToString();
             }
 
 
