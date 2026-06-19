@@ -194,28 +194,27 @@ namespace WebApplication1.Controllers
 
         [Authorize]
         [HttpPost("add")]
-        public ActionResult<PetsDto> AddPets([FromForm] PetsDto pets)
+        public async Task<ActionResult> AddPets([FromForm] PetsDto pets)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var castUserId = int.Parse(userId);
-            //var existingPet = context.pets.FirstOrDefault(ep => ep.name == pets.name);
-            var existingPet = context.pets.Where(ep => ep.name == pets.name).ToList();
 
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("User doesn't exist.");
             }
 
-            foreach (var pet in existingPet)
+            var castUserId = int.Parse(userId);
+
+            var existingPet = context.pets.FirstOrDefault(ep =>
+                ep.name == pets.name &&
+                ep.type == pets.type &&
+                ep.age == pets.age &&
+                ep.phone == pets.phone
+            );
+
+            if (existingPet != null)
             {
-                if (pet != null &&
-                    pet.type == pets.type &&
-                    pet.age == pets.age &&
-                    pet.phone == pets.phone)
-                {
-                    return BadRequest("Pet with that information already exists.");
-                }
+                return BadRequest("Pet with that information already exists.");
             }
 
             string? imageUrl = null;
@@ -239,7 +238,7 @@ namespace WebApplication1.Controllers
                     Folder = "petcare-match/pets"
                 };
 
-                var uploadResult = cloudinary.Upload(uploadParams);
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
                 if (uploadResult.Error != null)
                 {
@@ -248,7 +247,6 @@ namespace WebApplication1.Controllers
 
                 imageUrl = uploadResult.SecureUrl.ToString();
             }
-
 
             var pets1 = new Pets()
             {
@@ -261,9 +259,18 @@ namespace WebApplication1.Controllers
             };
 
             context.pets.Add(pets1);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
-            return Ok(pets);
+            return Ok(new
+            {
+                pets1.id,
+                pets1.name,
+                pets1.age,
+                pets1.phone,
+                pets1.type,
+                pets1.image,
+                pets1.toBabysit
+            });
         }
 
         [Authorize]
