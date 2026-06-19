@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
                 age = pet.age,
                 phone = pet.phone,
                 type = pet.type,
-                //image = pet.image
+                imageUrl = p.image,
             };
 
             return Ok(pet1);
@@ -79,7 +79,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                //image = p.image,
+                imageUrl = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -108,7 +108,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                //image = p.image,
+                imageUrl = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -139,7 +139,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                //image = p.image,
+                imageUrl = p.image,
             }).ToList();
 
             if (pets.Count == 0)
@@ -170,7 +170,7 @@ namespace WebApplication1.Controllers
                 age = p.age,
                 phone = p.phone,
                 type = p.type,
-                //image = p.image,
+                imageUrl = p.image,
             }).ToList();
 
             if (pets.Count == 0)

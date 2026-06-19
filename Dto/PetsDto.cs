@@ -15,6 +15,7 @@ namespace WebApplication1.Dto
 
         public IFormFile? image { get; set; }
 
+        public string? imageUrl { get; set; }
 
         public int? userId { get; set; }
 
